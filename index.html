@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Troll game</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+</head>
+<body>
+    <script>
+
+const config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    backgroundColor: '#0980c6',
+    physics: {
+        default: 'arcade',
+    },
+    scene: {
+        preload: preload,
+        create: create,
+        update: update,
+    }
+};
+
+const game = new Phaser.Game(config);
+
+function preload () {
+    this.load.image('troll-default', 'res/troll-default.webp');
+    this.load.image('troll-problem', 'res/troll-problem.webp');
+    this.load.image('troll-crazy', 'res/troll-crazy.jpg');
+}
+
+function create () {
+    let troll = this.physics.add.image(400, 300, 'troll-default');
+    troll.setScale(0.5)
+    troll.setBounce(1, 1)
+    troll.setCollideWorldBounds(true)
+    this.troll = troll
+
+    this.cursors = this.input.keyboard.createCursorKeys();
+}
+
+function update() {
+    let cursors = this.cursors
+    let troll = this.troll
+
+    troll.setVelocity(0, 0)
+
+    // todo: а как же слушать ивенты? :(
+    if (cursors.left.isDown) {
+        troll.setVelocityX(-300);
+    } else if (cursors.right.isDown) {
+        troll.setVelocityX(300);
+    }
+
+    if (cursors.up.isDown) {
+        troll.setVelocityY(-300);
+    } else if (cursors.down.isDown) {
+        troll.setVelocityY(300);
+    }
+}
+
+    </script>
+</body>
+</html>

@@ -59,11 +59,11 @@ function create () {
 
     for (let i = 0; i < coins.length; i++) {
         let coin = coins[i];
-        this.physics.add.overlap(troll, coin, grabCoin);
+        this.physics.add.overlap(troll, coin, grabCoin, null, this);
     }
     for (let i = 0; i < bombs.length; i++) {
         let bomb = bombs[i];
-        this.physics.add.overlap(troll, bomb, explode);
+        this.physics.add.overlap(troll, bomb, explode, null, this);
     }
 }
 
@@ -100,6 +100,15 @@ function grabCoin(troll, coin) {
         troll.setTexture('troll-crazy');
         troll.setScale(0.2);
         troll.setCollideWorldBounds(true);
+
+        if (this.timer) {
+            this.timer.destroy();
+        }
+        this.timer = this.time.addEvent({
+            delay: 3000, // time in milliseconds
+            callback: setDefaultTroll,
+            callbackScope: this,
+        });
     }
 }
 
@@ -112,5 +121,19 @@ function explode(troll, bomb) {
 
         troll.setTexture('troll-problem');
         troll.setScale(0.15);
+
+        if (this.timer) {
+            this.timer.destroy();
+        }
+        this.timer = this.time.addEvent({
+            delay: 3000, // time in milliseconds
+            callback: setDefaultTroll,
+            callbackScope: this,
+        });
     }
+}
+
+function setDefaultTroll() {
+    this.troll.setTexture('troll-default');
+    this.troll.setScale(0.5);
 }

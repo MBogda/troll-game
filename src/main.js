@@ -23,6 +23,7 @@ function preload () {
     this.load.image('troll-problem', 'res/troll-problem.webp');
     this.load.image('troll-crazy', 'res/troll-crazy.jpg');
     this.load.image('coin', 'res/coin.png');
+    this.load.image('bomb', 'res/bomb.webp');
 }
 
 function create () {
@@ -40,15 +41,29 @@ function create () {
     }
     this.coins = coins;
 
+    let bombs = [];
+    for (let i = 0; i < 3; i++) {
+        let x = Math.floor(Math.random() * WIDTH) + 1;
+        let y = Math.floor(Math.random() * HEIGHT) + 1;
+        let bomb = this.physics.add.image(x, y, 'bomb');
+        bomb.setCollideWorldBounds(true);
+        bombs.push(bomb);
+    }
+    this.bombs = bombs;
+
     let troll = this.physics.add.image(WIDTH / 2, HEIGHT / 2, 'troll-default');
     troll.setScale(0.5);
     // troll.setBounce(1, 1);
     troll.setCollideWorldBounds(true);
     this.troll = troll
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < coins.length; i++) {
         let coin = coins[i];
         this.physics.add.overlap(troll, coin, grabCoin);
+    }
+    for (let i = 0; i < bombs.length; i++) {
+        let bomb = bombs[i];
+        this.physics.add.overlap(troll, bomb, explode);
     }
 }
 
@@ -81,5 +96,21 @@ function grabCoin(troll, coin) {
         let x = Math.floor(Math.random() * WIDTH) + 1;
         let y = Math.floor(Math.random() * HEIGHT) + 1;
         coin.setPosition(x, y);
+
+        troll.setTexture('troll-crazy');
+        troll.setScale(0.2);
+        troll.setCollideWorldBounds(true);
+    }
+}
+
+function explode(troll, bomb) {
+    let distance = Phaser.Math.Distance.Between(troll.x, troll.y, bomb.x, bomb.y);
+    if (distance < bomb.width / 2) {
+        let x = Math.floor(Math.random() * WIDTH) + 1;
+        let y = Math.floor(Math.random() * HEIGHT) + 1;
+        bomb.setPosition(x, y);
+
+        troll.setTexture('troll-problem');
+        troll.setScale(0.15);
     }
 }

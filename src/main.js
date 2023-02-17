@@ -68,20 +68,52 @@ function create () {
 }
 
 function update() {
+    // if (this.input.activePointer.active) {
+        updatePointer.call(this);
+    // }
+    // updateCursors.call(this);   // todo: control by both pointers and cursors
+}
+
+function updatePointer() {
+    let pointerX = this.input.activePointer.x;
+    let pointerY = this.input.activePointer.y;
+
+    let troll = this.troll;
+
+    if (Math.abs(pointerX - troll.x) > 10) {  // troll.width / 2
+        troll.setVelocityX(300 * Math.sign(pointerX - troll.x));
+    } else {
+        troll.setVelocityX(0);
+    }
+
+    if (Math.abs(pointerY - troll.y) > 10) {
+        troll.setVelocityY(300 * Math.sign(pointerY - troll.y));
+    } else {
+        troll.setVelocityY(0);
+    }
+}
+
+function updateCursors() {
+    // console.log(this.input.mousePointer.x, this.input.mousePointer.y);
+
     let cursors = this.cursors
     let troll = this.troll
 
     if (cursors.left.isDown) {
+        this.mouse = false;
         troll.setVelocityX(-300);
     } else if (cursors.right.isDown) {
+        this.mouse = false;
         troll.setVelocityX(300);
     } else {
         troll.setVelocityX(0);
     }
 
     if (cursors.up.isDown) {
+        this.mouse = false;
         troll.setVelocityY(-300);
     } else if (cursors.down.isDown) {
+        this.mouse = false;
         troll.setVelocityY(300);
     } else {
         troll.setVelocityY(0);

@@ -25,6 +25,7 @@ function preload () {
     this.load.image('troll-crazy', 'res/troll-crazy.jpg');
     this.load.image('coin', 'res/coin.png');
     this.load.image('bomb', 'res/bomb.webp');
+    this.load.image('music-icon', 'res/icons8-music-96.svg')    // todo: no-music icon
 
     // audio
     this.load.audio('khill-trololo', 'res/Eduard_Khill_Trololo.mp3');
@@ -34,8 +35,8 @@ function preload () {
 }
 
 function create () {
-    let background_music = this.sound.add('khill-trololo');
-    background_music.play();
+    this.backgroundMusic = this.sound.add('khill-trololo');
+    this.backgroundMusic.play();
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -75,6 +76,15 @@ function create () {
         let bomb = bombs[i];
         this.physics.add.overlap(troll, bomb, explode, null, this);
     }
+
+    this.musicIcon = this.physics.add.image(WIDTH - 50, 50, 'music-icon').setInteractive();
+    this.musicIcon.on('pointerdown', function (pointer) {
+        if (this.backgroundMusic.isPaused) {
+            this.backgroundMusic.resume();
+        } else {
+            this.backgroundMusic.pause();
+        }
+    }, this);
 }
 
 function update() {

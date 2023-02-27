@@ -19,14 +19,24 @@ const config = {
 const game = new Phaser.Game(config);
 
 function preload () {
+    // images
     this.load.image('troll-default', 'res/troll-default.webp');
     this.load.image('troll-problem', 'res/troll-problem.webp');
     this.load.image('troll-crazy', 'res/troll-crazy.jpg');
     this.load.image('coin', 'res/coin.png');
     this.load.image('bomb', 'res/bomb.webp');
+
+    // audio
+    this.load.audio('khill-trololo', 'res/Eduard_Khill_Trololo.mp3');
+    // todo? add `.odd` format for Firefox
+    // todo: different troll songs are here: https://www.youtube.com/watch?v=2J6y3zK2MS0&ab_channel=PLAYBACK
+    //  a possible song from the songs above is here: https://www.youtube.com/watch?v=UHTFCZgm6HU&ab_channel=D1ofAquavibe
 }
 
 function create () {
+    let background_music = this.sound.add('khill-trololo');
+    background_music.play();
+
     this.cursors = this.input.keyboard.createCursorKeys();
 
     let coins = [];

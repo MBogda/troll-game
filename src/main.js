@@ -91,6 +91,9 @@ function create () {
             this.backgroundMusic.pause();
         }
     }, this);
+
+    let versionTextStyle = { font: "12px Arial", fill: "#000000", align: "center" };
+    this.versionText = this.add.text(10, HEIGHT - 20, "v0.3.0-sounds", versionTextStyle);
 }
 
 function update() {

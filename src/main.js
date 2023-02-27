@@ -32,11 +32,17 @@ function preload () {
     // todo? add `.odd` format for Firefox
     // todo: different troll songs are here: https://www.youtube.com/watch?v=2J6y3zK2MS0&ab_channel=PLAYBACK
     //  a possible song from the songs above is here: https://www.youtube.com/watch?v=UHTFCZgm6HU&ab_channel=D1ofAquavibe
+
+    this.load.audio('grab-coin-sound', 'res/mixkit-fairy-arcade-sparkle-866.wav');
+    this.load.audio('explosion-sound', 'res/mixkit-fuel-explosion-1705.wav');
 }
 
 function create () {
     this.backgroundMusic = this.sound.add('khill-trololo');
     this.backgroundMusic.play();
+
+    this.grabCoinSound = this.sound.add('grab-coin-sound');
+    this.explosionSound = this.sound.add('explosion-sound');
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -145,6 +151,8 @@ function grabCoin(troll, coin) {
 
     let distance = Phaser.Math.Distance.Between(troll.x, troll.y, coin.x, coin.y);
     if (distance < coin.width / 30) {
+        this.grabCoinSound.play();
+
         let x = Math.floor(Math.random() * WIDTH) + 1;
         let y = Math.floor(Math.random() * HEIGHT) + 1;
         coin.setPosition(x, y);
@@ -167,6 +175,8 @@ function grabCoin(troll, coin) {
 function explode(troll, bomb) {
     let distance = Phaser.Math.Distance.Between(troll.x, troll.y, bomb.x, bomb.y);
     if (distance < bomb.width / 2) {
+        this.explosionSound.play();
+
         let x = Math.floor(Math.random() * WIDTH) + 1;
         let y = Math.floor(Math.random() * HEIGHT) + 1;
         bomb.setPosition(x, y);

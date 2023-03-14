@@ -1,3 +1,4 @@
+const VERSION = "v0.3.1-safari-sounds";
 const WIDTH = 800;
 const HEIGHT = 600;
 
@@ -33,8 +34,8 @@ function preload () {
     // todo: different troll songs are here: https://www.youtube.com/watch?v=2J6y3zK2MS0&ab_channel=PLAYBACK
     //  a possible song from the songs above is here: https://www.youtube.com/watch?v=UHTFCZgm6HU&ab_channel=D1ofAquavibe
 
-    this.load.audio('grab-coin-sound', 'res/mixkit-fairy-arcade-sparkle-866.wav');
-    this.load.audio('explosion-sound', 'res/mixkit-fuel-explosion-1705.wav');
+    this.load.audio('grab-coin-sound', ['res/mixkit-fairy-arcade-sparkle-866.wav', 'res/mixkit-fairy-arcade-sparkle-866.m4a']);
+    this.load.audio('explosion-sound', ['res/mixkit-fuel-explosion-1705.wav', 'res/mixkit-fuel-explosion-1705.m4a']);
 }
 
 function create () {
@@ -93,7 +94,7 @@ function create () {
     }, this);
 
     let versionTextStyle = { font: "12px Arial", fill: "#000000", align: "center" };
-    this.versionText = this.add.text(10, HEIGHT - 20, "v0.3.0-sounds", versionTextStyle);
+    this.versionText = this.add.text(10, HEIGHT - 20, VERSION, versionTextStyle);
 }
 
 function update() {

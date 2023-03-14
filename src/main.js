@@ -1,4 +1,4 @@
-const VERSION = "v0.3.1-safari-sounds";
+const VERSION = "v0.3.2-music-loop";
 const WIDTH = 800;
 const HEIGHT = 600;
 
@@ -40,6 +40,7 @@ function preload () {
 
 function create () {
     this.backgroundMusic = this.sound.add('khill-trololo');
+    this.backgroundMusic.setLoop(true);
     this.backgroundMusic.play();
 
     this.grabCoinSound = this.sound.add('grab-coin-sound');
